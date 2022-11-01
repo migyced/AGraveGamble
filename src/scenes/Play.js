@@ -4,7 +4,11 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-
+        this.load.text('goodQuotes', 'assets/good.txt');
+        this.load.text('goodNeutralQuotes', 'assets/good_neutral.txt');
+        this.load.text('neutralQuotes', 'assets/neutral.txt');
+        this.load.text('badNeutralQuotes', 'assets/bad_neutral.txt');
+        this.load.text('badQuotes', 'assets/bad.txt');
     }
 
     create() {
@@ -16,6 +20,13 @@ class Play extends Phaser.Scene {
         
         // initialize number of ghosts correct
         this.correct = 0;
+
+        //create arrays for quotes
+        this.goodQuotes = this.loadWords('goodQuotes');
+        this.goodNeutralQuotes = this.loadWords('goodNeutralQuotes');
+        this.neutralQuotes = this.loadWords('neutralQuotes');
+        this.badNeutralQuotes = this.loadWords('badNeutralQuotes');
+        this.badQuotes = this.loadWords('badQuotes');
         
         // universal text config for printing out mechanics
         this.textConfig = {
@@ -63,17 +74,22 @@ class Play extends Phaser.Scene {
     update() {
         
         // check key input for restart / menu
-        if(this.gameOver && Phaser.Input.Keyboard.JustDown(keySPACE)) {
+        if(this.gameOver){
+            this.scene.start("endScene");
+        }
+        /*if(this.gameOver && Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.scene.restart();
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.scene.start("menuScene");
-        }
+        }*/
         
         if (!this.gameOver) {
             // space to roll dice again to see mechanic - REMOVE LATER
             if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
                 this.rollDice();
+                //print the quote related to the dice sum
+                console.log(this.chooseQuote(this.diceSum));
             }
             
             // player picked heaven for ghost
@@ -144,6 +160,9 @@ class Play extends Phaser.Scene {
         } else {
             this.heavenText = this.add.text(borderPadding, borderPadding + 200, "Hell", this.textConfig);
         }
+
+        //return diceSum
+        return this.diceSum;
     }
     
     // function to test probability calculations by doing it 100 times
@@ -230,5 +249,35 @@ class Play extends Phaser.Scene {
         this.alcIncrements = [0, 0.14, 0.28, 0.42, 0.56, 0.70, 0.84, 1, 1, 0.84, 0.70, 0.56, 0.42, 0.28, 0.14, 0];
         
         return this.alcIncrements[this.diceSum - 3];
+    }
+
+    loadWords(inFile) {
+        let cache = this.cache.text;
+        let allWords = cache.get(inFile);
+        this.tempArray = allWords.split('\n');
+        //this.finalArray = [[]];  
+        //this.node;
+        for(let i = 0; i < this.tempArray.length; i++){
+            /*this.node = this.tempArray[i].split(',');
+            this.node[1] = this.node[1].trim();
+            this.finalArray[i] = this.node;*/
+            this.tempArray[i] = this.tempArray[i].trim();
+        }
+        //return this.finalArray;
+        return this.tempArray;
+    }
+
+    chooseQuote(inNum){
+        if(3<= inNum && inNum <= 5){
+            return this.badQuotes[Math.floor(Math.random() * this.badQuotes.length)];
+        }else if(5 < inNum && inNum <= 8){
+            return this.badNeutralQuotes[Math.floor(Math.random() * this.badNeutralQuotes.length)];
+        }else if(8 < inNum && inNum <= 12){
+            return this.neutralQuotes[Math.floor(Math.random() * this.neutralQuotes.length)];
+        }else if(12 < inNum && inNum <= 15){
+            return this.goodNeutralQuotes[Math.floor(Math.random() * this.goodNeutralQuotes.length)];
+        }else if(15 < inNum && inNum <= 18){
+            return this.goodQuotes[Math.floor(Math.random() * this.goodQuotes.length)];
+        }
     }
 }
