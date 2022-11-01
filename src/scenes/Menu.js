@@ -6,6 +6,7 @@ class Menu extends Phaser.Scene {
     preload() {
         // load audio
         // this.load.audio('sfx_select', './assets/blip_select12.wav');
+        this.load.image('menu', 'assets/main_menu.png');
     }
 
     create() {
@@ -22,7 +23,9 @@ class Menu extends Phaser.Scene {
             },
             fixedWidth: 0
         }
-        
+        //background image
+        var image = this.add.image(game.config.width/2, game.config.height/2,'menu');
+
         // show menu text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'START GAME', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
