@@ -24,8 +24,8 @@ class Menu extends Phaser.Scene {
             fixedWidth: 0
         }
         //background image
-        var image = this.add.image(game.config.width/2, game.config.height/2,'main_menu');
-        var playButton = this.add.sprite(game.config.width/2, game.config.height/2,'button_play').setScale(2,2);
+        var bg = this.add.image(game.config.width/2, game.config.height/2,'main_menu');
+        var playButton = this.add.sprite(game.config.width/3+28, game.config.height/2+110,'button_play');
 
         // show menu text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'START GAME', menuConfig).setOrigin(0.5);

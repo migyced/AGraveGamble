@@ -32,9 +32,11 @@ class Load extends Phaser.Scene {
         this.load.image('dice_4', './assets/Props/dice_4.png')
         this.load.image('dice_5', './assets/Props/dice_5.png')
         this.load.image('dice_6', './assets/Props/dice_6.png')
+        this.load.image('manual', './assets/Props/manual.png')
+        this.load.image('manual_open', './assets/Props/manual_open.png')
 
         // Ghost
-        this.load.image('base_ghost', './assets/base_ghost.png')
+        this.load.image('base_ghost', './assets/Ghost Stuff/base_ghost.png')
 
         // Backgrounds
         this.load.image('end_bg', './assets/end_bg.png')

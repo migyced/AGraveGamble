@@ -12,6 +12,22 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        //create background and sprites
+        var bg = this.add.sprite(game.config.width/2, game.config.height/2,'main_bg');
+        var desk = this.add.sprite(game.config.width/2, (game.config.height/2)+105,'desk');
+        var base_ghost = this.add.sprite(game.config.width/2-100, game.config.height/2-75,'base_ghost');
+        var dialogue_box = this.add.sprite(game.config.width/2+140, game.config.height/2-130,'dialogue_box');
+        var button_heaven = this.add.sprite(game.config.width/2+210, game.config.height/2-60,'button_heaven');
+        var button_hell = this.add.sprite(game.config.width/2+210, game.config.height/2+10,'button_hell');
+        var manual = this.add.sprite(game.config.width/2+230, game.config.height/2+220,'manual');
+        var cup_2 = this.add.sprite(game.config.width/2-10, game.config.height/2+130,'cup_2');
+        var cup_1 = this.add.sprite(game.config.width/2+70, game.config.height/2+130,'cup_1');
+        var alcohol_1 = this.add.sprite(game.config.width/2-295, game.config.height/2+125,'alcohol_1');
+        var alcohol_2 = this.add.sprite(game.config.width/2-240, game.config.height/2+95,'alcohol_2');
+        var alcohol_3 = this.add.sprite(game.config.width/2-290, game.config.height/2+35,'alcohol_3');
+        var progressbar_1 = this.add.sprite(game.config.width/2-290, game.config.height/2-55,'progressbar_1');
+        var progressbar_1_fill = this.add.sprite(game.config.width/2-290, game.config.height/2-55,'progressbar_1_fill');
+
         // initialize alcohol
         this.alcohol = 0;
         
