@@ -25,7 +25,10 @@ class Menu extends Phaser.Scene {
         }
         //background image
         var bg = this.add.image(game.config.width/2, game.config.height/2,'main_menu');
-        var playButton = this.add.sprite(game.config.width/3+28, game.config.height/2+110,'button_play');
+        this.playButton = this.add.sprite(game.config.width/3+28, game.config.height/2+110,'button_play');
+        this.playButton.setInteractive({
+            useHandCursor: true,
+        });
 
         // show menu text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'START GAME', menuConfig).setOrigin(0.5);
@@ -47,6 +50,19 @@ class Menu extends Phaser.Scene {
           // this.sound.play('sfx_select');
           this.scene.start("playScene");    
         }
+
+        // play button functionality, BUGGY
+        this.input.on('gameobjectdown', (pointer, gameObject, event) => {
+            if (gameObject == this.playButton){
+               // Novice mode
+                game.settings = {
+                    gameTimer: 120000,
+                    maxAlcohol: 3,
+                }
+                // this.sound.play('sfx_select');
+                this.scene.start("playScene");
+            }   
+        });
         
       }
 }
