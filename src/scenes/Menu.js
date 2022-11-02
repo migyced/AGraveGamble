@@ -6,7 +6,7 @@ class Menu extends Phaser.Scene {
     preload() {
         // load audio
         // this.load.audio('sfx_select', './assets/blip_select12.wav');
-        this.load.image('menu', 'assets/main_menu.png');
+        // this.load.image('menu', 'assets/main_menu.png');
     }
 
     create() {
@@ -24,7 +24,8 @@ class Menu extends Phaser.Scene {
             fixedWidth: 0
         }
         //background image
-        var image = this.add.image(game.config.width/2, game.config.height/2,'menu');
+        var image = this.add.image(game.config.width/2, game.config.height/2,'main_menu');
+        var playButton = this.add.sprite(game.config.width/2, game.config.height/2,'button_play').setScale(2,2);
 
         // show menu text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'START GAME', menuConfig).setOrigin(0.5);
