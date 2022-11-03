@@ -9,6 +9,10 @@ class Play extends Phaser.Scene {
 
     create() {
         //create background and sprites
+        this.alcRectangle = this.add.rectangle(60, game.config.height / 2 + 110, 120, 140, 0x6666ff);
+        this.alcRectangle.setInteractive({
+            useHandCursor: true,
+        });
         this.bg = this.add.sprite(game.config.width/2, game.config.height/2,'main_bg');
         this.desk = this.add.sprite(game.config.width/2, (game.config.height/2)+105,'desk');
         this.base_ghost = this.add.sprite(game.config.width/2-100, game.config.height/2-75,'base_ghost');
@@ -23,7 +27,7 @@ class Play extends Phaser.Scene {
             useHandCursor: true,
         });
 
-
+        
         this.manual = this.add.sprite(game.config.width/2+230, game.config.height/2+220,'manual');
         this.cup_2 = this.add.sprite(game.config.width/2-10, game.config.height/2+130,'cup_2');
         this.cup_1 = this.add.sprite(game.config.width/2+70, game.config.height/2+130,'cup_1');
@@ -32,9 +36,10 @@ class Play extends Phaser.Scene {
         this.alcohol_3 = this.add.sprite(game.config.width/2-290, game.config.height/2+35,'alcohol_3');
         this.progressbar_1 = this.add.sprite(game.config.width/2-290, game.config.height/2-55,'progressbar_1');
         this.progressbar_1_fill = this.add.sprite(game.config.width/2-290, game.config.height/2-55, 'progressbar_1_fill');
-        this.die1Sprite = this.add.sprite(game.config.width / 2 - 140, game.config.height / 2 + 100, 'dice_sheet');
-        this.die2Sprite = this.add.sprite(game.config.width / 2 - 110, game.config.height / 2 + 125, 'dice_sheet');
-        this.die3Sprite = this.add.sprite(game.config.width / 2 - 105, game.config.height / 2 + 90, 'dice_sheet');
+        this.die1Sprite = this.add.sprite(game.config.width/2-140, game.config.height/2+100, 'dice_sheet');
+        this.die2Sprite = this.add.sprite(game.config.width/2-110, game.config.height/2+125, 'dice_sheet');
+        this.die3Sprite = this.add.sprite(game.config.width/2-105, game.config.height/2+90, 'dice_sheet');
+        
         
         // animation config
         this.anims.create({
@@ -43,21 +48,6 @@ class Play extends Phaser.Scene {
             frameRate: 10
         });
         
-        // =======
-        // var bg = this.add.sprite(game.config.width/2, game.config.height/2,'main_bg');
-        // var desk = this.add.sprite(game.config.width/2, (game.config.height/2)+105,'desk');
-        // var base_ghost = this.add.sprite(game.config.width/2-100, game.config.height/2-75,'base_ghost');
-        // var dialogue_box = this.add.sprite(game.config.width/2+140, game.config.height/2-130,'dialogue_box');
-        // var button_heaven = this.add.sprite(game.config.width/2+210, game.config.height/2-60,'button_heaven');
-        // var button_hell = this.add.sprite(game.config.width/2+210, game.config.height/2+10,'button_hell');
-        // var manual = this.add.sprite(game.config.width/2+230, game.config.height/2+220,'manual');
-        // var cup_2 = this.add.sprite(game.config.width/2-10, game.config.height/2+130,'cup_2');
-        // var cup_1 = this.add.sprite(game.config.width/2+70, game.config.height/2+130,'cup_1');
-        // var alcohol_1 = this.add.sprite(game.config.width/2-295, game.config.height/2+125,'alcohol_1');
-        // var alcohol_2 = this.add.sprite(game.config.width/2-240, game.config.height/2+95,'alcohol_2');
-        // var alcohol_3 = this.add.sprite(game.config.width/2-290, game.config.height/2+35,'alcohol_3');
-        // var progressbar_1 = this.add.sprite(game.config.width/2-290, game.config.height/2-55,'progressbar_1');
-        // var progressbar_1_fill = this.add.sprite(game.config.width/2-290, game.config.height/2-55,'progressbar_1_fill');
         this.correctSFX = this.sound.add('correctSFX');
         this.wrongSFX = this.sound.add('wrongSFX');
 
@@ -126,9 +116,9 @@ class Play extends Phaser.Scene {
         
         
         // testing if my chance calculation works works - REMOVE LATER
-        for (let x = 3; x < 19; x++) {
-            this.rollDiceTest(x);
-        }
+        // for (let x = 3; x < 19; x++) {
+        //     this.rollDiceTest(x);
+        // }
         
         
         // button functionality
@@ -140,14 +130,15 @@ class Play extends Phaser.Scene {
                 if (gameObject == this.button_hell){
                     this.sendToHell();
                 } 
+                if (gameObject == this.alcRectangle && this.alcohol >= 1) {
+                    this.drank = true;
+                }
             }
         });
-
-        //test
     }
 
     update() {
-        //music loop?
+        // music loop?
         if(!music.isPlaying){
             music.play();
         }        
@@ -157,7 +148,6 @@ class Play extends Phaser.Scene {
             this.alcoholText.destroy();
             this.diceSumText.destroy();
             this.heavenText.destroy();
-            this.scoreText.destroy();
             this.dialogueText.destroy();
         }
         
@@ -167,25 +157,18 @@ class Play extends Phaser.Scene {
         //debugging text that appears in orange
         this.alcoholText = this.add.text(borderPadding, borderPadding, "Alcohol: " + this.alcohol, this.dialogueConfig);
         this.diceSumText = this.add.text(borderPadding, borderPadding + 160, "Dice Sum: " + this.diceSum, this.dialogueConfig);
-        this.scoreText = this.add.text(borderPadding, borderPadding + 240, "Number of Ghosts Correct: " + this.correct, this.dialogueConfig);
         if (this.heaven) {
             this.heavenText = this.add.text(borderPadding, borderPadding + 200, "Heaven", this.dialogueConfig);
         } else {
             this.heavenText = this.add.text(borderPadding, borderPadding + 200, "Hell", this.dialogueConfig);
         }
-        
 
         // check key input for restart / menu
         if(this.gameOver){
             this.scene.start("endScene");
         }
         
-        if (!this.gameOver) {
-            // space to roll dice again to see mechanic - REMOVE LATER
-            if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-                this.rollDice();
-            }
-            
+        if (!this.gameOver) {            
             // player picked heaven for ghost
             if (Phaser.Input.Keyboard.JustDown(keyUP)) {
                 this.sendToHeaven();
@@ -239,7 +222,6 @@ class Play extends Phaser.Scene {
         }
         
 
-        //return diceSum
         this.quote = this.chooseQuote(this.diceSum);
         
         this.die1Sprite.on('animationcomplete', () => {    // callback after anim completes
@@ -257,7 +239,6 @@ class Play extends Phaser.Scene {
     }
     
     // function to test probability calculations by doing it 100 times
-    // REMOVE LATER
     rollDiceTest(diceRoll) {
         let heavenNum = 0;
         let hellNum = 0;
@@ -285,16 +266,12 @@ class Play extends Phaser.Scene {
             this.correctSFX.play();
             // increase correct number
             this.correct++;
-            // print out score - REMOVE LATER
-            this.scoreText = this.add.text(borderPadding, borderPadding + 240, "Number of Ghosts Correct: " + this.correct, this.textConfig);
             // update alcohol
             this.alcohol -= 1;
         } else if (this.heaven) {
             // play correct sound
             this.correctSFX.play();
             this.correct++;
-            // print out score - REMOVE LATER
-            this.scoreText = this.add.text(borderPadding, borderPadding + 240, "Number of Ghosts Correct: " + this.correct, this.textConfig);
             // update alcohol and make sure it isn't past the max
             this.alcohol += this.alcCalc();
             if (this.alcohol > 3) {
@@ -315,16 +292,12 @@ class Play extends Phaser.Scene {
             this.correctSFX.play();
             // increase correct number
             this.correct++;
-            // print out score - REMOVE LATER
-            this.scoreText = this.add.text(borderPadding, borderPadding + 240, "Number of Ghosts Correct: " + this.correct, this.textConfig);
             // update alcohol
             this.alcohol -= 1;
         } else if (!this.heaven) {
             // play correct sound
             this.correctSFX.play();
             this.correct++;
-            // print out score - REMOVE LATER
-            this.scoreText = this.add.text(borderPadding, borderPadding + 240, "Number of Ghosts Correct: " + this.correct, this.textConfig);
             // update alcohol and make sure it isn't past the max
             this.alcohol += this.alcCalc();
             if (this.alcohol > 3) {
