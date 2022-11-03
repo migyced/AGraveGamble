@@ -9,7 +9,6 @@ class Play extends Phaser.Scene {
 
     create() {
         //create background and sprites
-
         this.bg = this.add.sprite(game.config.width/2, game.config.height/2,'main_bg');
         this.desk = this.add.sprite(game.config.width/2, (game.config.height/2)+105,'desk');
         this.base_ghost = this.add.sprite(game.config.width/2-100, game.config.height/2-75,'base_ghost');
@@ -32,7 +31,17 @@ class Play extends Phaser.Scene {
         this.alcohol_2 = this.add.sprite(game.config.width/2-240, game.config.height/2+95,'alcohol_2');
         this.alcohol_3 = this.add.sprite(game.config.width/2-290, game.config.height/2+35,'alcohol_3');
         this.progressbar_1 = this.add.sprite(game.config.width/2-290, game.config.height/2-55,'progressbar_1');
-        this.progressbar_1_fill = this.add.sprite(game.config.width / 2 - 290, game.config.height / 2 - 55, 'progressbar_1_fill');
+        this.progressbar_1_fill = this.add.sprite(game.config.width/2-290, game.config.height/2-55, 'progressbar_1_fill');
+        this.die1Sprite = this.add.sprite(game.config.width / 2 - 140, game.config.height / 2 + 100, 'dice_sheet');
+        this.die2Sprite = this.add.sprite(game.config.width / 2 - 110, game.config.height / 2 + 125, 'dice_sheet');
+        this.die3Sprite = this.add.sprite(game.config.width / 2 - 105, game.config.height / 2 + 90, 'dice_sheet');
+        
+        // animation config
+        this.anims.create({
+            key: 'roll',
+            frames: this.anims.generateFrameNumbers('dice_sheet', { start: 0, end: 5, first: 0}),
+            frameRate: 10
+        });
         
         // =======
         // var bg = this.add.sprite(game.config.width/2, game.config.height/2,'main_bg');
@@ -51,7 +60,6 @@ class Play extends Phaser.Scene {
         // var progressbar_1_fill = this.add.sprite(game.config.width/2-290, game.config.height/2-55,'progressbar_1_fill');
         this.correctSFX = this.sound.add('correctSFX');
         this.wrongSFX = this.sound.add('wrongSFX');
-// >>>>>>> main
 
 
         // initialize alcohol
@@ -96,11 +104,9 @@ class Play extends Phaser.Scene {
         // initial roll of dice - would player have to roll dice somehow?
         this.rollDice();
         
-        // initialize ghost sprite here
 
         // ghost dialogue
         this.quote = this.chooseQuote(this.diceSum);
-        //this.dialogueText = this.add.text(game.config.width/2 + 15, game.config.height/10 -3, this.quote, this.dialogueConfig);
 
         // GAME OVER flag
         this.gameOver = false;
@@ -124,8 +130,7 @@ class Play extends Phaser.Scene {
             this.rollDiceTest(x);
         }
         
-        //this.scoreText = this.add.text(borderPadding, borderPadding + 240, " of Ghosts Correct: " + this.correct, this.textConfig);
-
+        
         // button functionality
         this.input.on('gameobjectdown', (pointer, gameObject, event) => {
             if (!this.gameOver) {
@@ -145,18 +150,11 @@ class Play extends Phaser.Scene {
         //music loop?
         if(!music.isPlaying){
             music.play();
-        }
-        // //keeps the background refreshing
-        // this.add.sprite(game.config.width/2, game.config.height/2,'main_bg');
-
-        
+        }        
         
         // had to destroy all text so it wouldn't rewrite itself
         if (this.alcoholText) {
             this.alcoholText.destroy();
-            this.die1Text.destroy();
-            this.die2Text.destroy();
-            this.die3Text.destroy();
             this.diceSumText.destroy();
             this.heavenText.destroy();
             this.scoreText.destroy();
@@ -168,9 +166,6 @@ class Play extends Phaser.Scene {
 
         //debugging text that appears in orange
         this.alcoholText = this.add.text(borderPadding, borderPadding, "Alcohol: " + this.alcohol, this.dialogueConfig);
-        this.die1Text = this.add.text(borderPadding, borderPadding + 40, "Dice 1: " + this.die1, this.dialogueConfig);
-        this.die2Text = this.add.text(borderPadding, borderPadding + 80, "Dice 2: " + this.die2, this.dialogueConfig);
-        this.die3Text = this.add.text(borderPadding, borderPadding + 120, "Dice 3: " + this.die3, this.dialogueConfig);
         this.diceSumText = this.add.text(borderPadding, borderPadding + 160, "Dice Sum: " + this.diceSum, this.dialogueConfig);
         this.scoreText = this.add.text(borderPadding, borderPadding + 240, "Number of Ghosts Correct: " + this.correct, this.dialogueConfig);
         if (this.heaven) {
@@ -178,6 +173,7 @@ class Play extends Phaser.Scene {
         } else {
             this.heavenText = this.add.text(borderPadding, borderPadding + 200, "Hell", this.dialogueConfig);
         }
+        
 
         // check key input for restart / menu
         if(this.gameOver){
@@ -208,6 +204,11 @@ class Play extends Phaser.Scene {
     }
     
     rollDice() {
+        this.die1Sprite.anims.play('roll');
+        this.die2Sprite.anims.play('roll');
+        this.die3Sprite.anims.play('roll');
+        
+        
         // set drank alcohol state back to false since new ghost
         this.drank = false;
         
@@ -240,10 +241,18 @@ class Play extends Phaser.Scene {
 
         //return diceSum
         this.quote = this.chooseQuote(this.diceSum);
-        // if (this.dialogueText) {
-        //     this.dialogueText.destroy();
-        // }
-        // this.dialogueText = this.add.text(game.config.width/2 + 15, game.config.height/10 -3, this.quote, this.dialogueConfig);
+        
+        this.die1Sprite.on('animationcomplete', () => {    // callback after anim completes
+            this.die1Sprite.setFrame(this.die1 - 1);
+        });
+        this.die2Sprite.on('animationcomplete', () => {    // callback after anim completes
+            this.die2Sprite.setFrame(this.die2 - 1);
+        });
+        this.die3Sprite.on('animationcomplete', () => {    // callback after anim completes
+            this.die3Sprite.setFrame(this.die3 - 1);
+        });
+
+        
         return this.diceSum;
     }
     

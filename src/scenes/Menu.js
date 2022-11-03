@@ -40,17 +40,10 @@ class Menu extends Phaser.Scene {
             }   
         });
 
-        // show menu text
-        // this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'START GAME', menuConfig).setOrigin(0.5);
-        // menuConfig.backgroundColor = '#00FF00';
-        // menuConfig.color = '#000';
-        // this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press SPACE to start', menuConfig).setOrigin(0.5);
-
         // define keys
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
         music.play();
-        //this.sound.setDecodedCallback(music, play, this);
     }
 
     update() {
@@ -64,7 +57,6 @@ class Menu extends Phaser.Scene {
             gameTimer: 120000,
             maxAlcohol: 3,
           }
-          // this.sound.play('sfx_select');
           this.scene.start("playScene");    
         }
       }
