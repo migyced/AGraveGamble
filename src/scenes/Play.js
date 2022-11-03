@@ -5,7 +5,6 @@ class Play extends Phaser.Scene {
 
     preload() {
         this.maxAlcohol = game.settings.maxAlcohol;
-        console.log(game.settings.maxAlcohol);
     }
 
     create() {
@@ -36,8 +35,9 @@ class Play extends Phaser.Scene {
         this.alcohol_2 = this.add.sprite(game.config.width/2-240, game.config.height/2+95,'alcohol_2');
         this.alcohol_3 = this.add.sprite(game.config.width/2-290, game.config.height/2+35,'alcohol_3');
         this.progressbar_1 = this.add.sprite(game.config.width/2-290, game.config.height/2-55,'progressbar_1');
-        this.progressbar_1_fill = this.add.sprite(game.config.width/2-290, game.config.height/2-55, 'progressbar_1_fill');
-        this.die1Sprite = this.add.sprite(game.config.width/2-140, game.config.height/2+100, 'dice_sheet');
+        //this.progressbar_1_fill = this.add.sprite(game.config.width/2-290, game.config.height/2-55, 'progressbar_1_fill');
+        this.progressbar_1_fill = this.add.sprite(game.config.width/2-316, game.config.height/2-10, 'progressbar_1_fill').setOrigin(0, 1);
+        this.die1Sprite = this.add.sprite(game.config.width / 2 - 140, game.config.height / 2 + 100, 'dice_sheet');
         this.die2Sprite = this.add.sprite(game.config.width/2-110, game.config.height/2+125, 'dice_sheet');
         this.die3Sprite = this.add.sprite(game.config.width/2-105, game.config.height/2+90, 'dice_sheet');
 
@@ -140,7 +140,6 @@ class Play extends Phaser.Scene {
                 } 
                 if (gameObject == this.alcRectangle && this.alcohol >= this.maxAlcohol) {
                     this.wine.play();
-                    console.log('reach');
                     this.drank = true;
                     // update alcohol
                     this.alcohol -= 1;
@@ -179,7 +178,6 @@ class Play extends Phaser.Scene {
         // had to destroy all text so it wouldn't rewrite itself
         if (this.alcoholText) {
             this.alcoholText.destroy();
-            this.diceSumText.destroy();
             this.heavenText.destroy();
             this.dialogueText.destroy();
         }
@@ -189,13 +187,15 @@ class Play extends Phaser.Scene {
 
         //debugging text that appears in orange
         this.alcoholText = this.add.text(borderPadding, borderPadding, "Alcohol: " + this.alcohol, this.dialogueConfig);
-        this.diceSumText = this.add.text(borderPadding, borderPadding + 160, "Dice Sum: " + this.diceSum, this.dialogueConfig);
         if (this.heaven) {
             this.heavenText = this.add.text(borderPadding, borderPadding + 200, "Heaven", this.dialogueConfig);
         } else {
             this.heavenText = this.add.text(borderPadding, borderPadding + 200, "Hell", this.dialogueConfig);
         }
-
+        
+        
+        this.progressbar_1_fill.setScale(1, this.alcohol);
+        
         // check key input for restart / menu
         if(this.gameOver){
             this.scene.start("endScene");
@@ -215,7 +215,6 @@ class Play extends Phaser.Scene {
             // player drank alcohol
             if (Phaser.Input.Keyboard.JustDown(keyLEFT) && this.alcohol >= game.settings.maxAlcohol) {
                 this.wine.play();
-                console.log('reach');
                 this.drank = true;
                 // update alcohol
                 this.alcohol -= 1;
@@ -328,8 +327,6 @@ class Play extends Phaser.Scene {
             this.correctSFX.play();
             // increase correct number
             this.correct++;
-            // update alcohol
-            this.alcohol -= 1;
         } else if (!this.heaven) {
             // play correct sound
             this.correctSFX.play();
