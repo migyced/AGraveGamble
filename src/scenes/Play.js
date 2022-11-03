@@ -15,7 +15,7 @@ class Play extends Phaser.Scene {
         });
         this.bg = this.add.sprite(game.config.width/2, game.config.height/2,'main_bg');
         this.base_ghost = this.add.sprite(game.config.width/2-100, game.config.height/2-75,'base_ghost');
-        this.desk = this.add.sprite(game.config.width/2, (game.config.height/2)+105,'desk');
+        this.desk = this.add.sprite(game.config.width/2, (game.config.height/2)+108,'desk');
         this.dialogue_box = this.add.sprite(game.config.width/2+140, game.config.height/2-130,'dialogue_box');
 
         this.button_heaven = this.add.sprite(game.config.width/2+210, game.config.height/2-60,'button_heaven');
@@ -32,7 +32,7 @@ class Play extends Phaser.Scene {
         this.cup_2 = this.add.sprite(game.config.width/2-10, game.config.height/2+130,'cup_2');
         this.cup_1 = this.add.sprite(game.config.width/2+70, game.config.height/2+130,'cup_1');
         this.alcohol_1 = this.add.sprite(game.config.width/2-295, game.config.height/2+125,'alcohol_1');
-        this.alcohol_2 = this.add.sprite(game.config.width/2-240, game.config.height/2+95,'alcohol_2');
+        this.alcohol_2 = this.add.sprite(game.config.width/2-240, game.config.height/2+98,'alcohol_2');
         this.alcohol_3 = this.add.sprite(game.config.width/2-290, game.config.height/2+35,'alcohol_3');
         this.progressbar_1 = this.add.sprite(game.config.width/2-290, game.config.height/2-55,'progressbar_1');
         //this.progressbar_1_fill = this.add.sprite(game.config.width/2-290, game.config.height/2-55, 'progressbar_1_fill');
