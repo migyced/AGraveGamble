@@ -14,8 +14,8 @@ class Play extends Phaser.Scene {
             useHandCursor: true,
         });
         this.bg = this.add.sprite(game.config.width/2, game.config.height/2,'main_bg');
-        this.desk = this.add.sprite(game.config.width/2, (game.config.height/2)+105,'desk');
         this.base_ghost = this.add.sprite(game.config.width/2-100, game.config.height/2-75,'base_ghost');
+        this.desk = this.add.sprite(game.config.width/2, (game.config.height/2)+105,'desk');
         this.dialogue_box = this.add.sprite(game.config.width/2+140, game.config.height/2-130,'dialogue_box');
 
         this.button_heaven = this.add.sprite(game.config.width/2+210, game.config.height/2-60,'button_heaven');
@@ -40,6 +40,9 @@ class Play extends Phaser.Scene {
         this.die1Sprite = this.add.sprite(game.config.width / 2 - 140, game.config.height / 2 + 100, 'dice_sheet');
         this.die2Sprite = this.add.sprite(game.config.width/2-110, game.config.height/2+125, 'dice_sheet');
         this.die3Sprite = this.add.sprite(game.config.width/2-105, game.config.height/2+90, 'dice_sheet');
+
+        this.movingHeavenFlag = false
+        this.movingHellFlag = false
         
         
         // animation config
@@ -157,6 +160,27 @@ class Play extends Phaser.Scene {
             music.play();
         }        
         
+        if (this.movingHeavenFlag){
+            this.base_ghost.y--
+            this.base_ghost.y--
+            this.base_ghost.y--
+            if (this.base_ghost.y < -100){
+                this.base_ghost.y = game.config.height/2-75;
+                this.movingHeavenFlag = false
+                this.rollDice()
+            }
+        }
+        if (this.movingHellFlag){
+            // this.base_ghost.SendToBack()
+            this.base_ghost.y++
+            this.base_ghost.y++
+            this.base_ghost.y++
+            if (this.base_ghost.y >  game.config.height+100){
+                this.base_ghost.y = game.config.height/2-75;
+                this.movingHellFlag = false
+                this.rollDice()
+            }
+        }
         // had to destroy all text so it wouldn't rewrite itself
         if (this.alcoholText) {
             this.alcoholText.destroy();
@@ -299,8 +323,8 @@ class Play extends Phaser.Scene {
             this.wrongSFX.play();
         }
         
-        // roll dice/spawn new ghost
-        this.rollDice();
+        this.movingHeavenFlag = true;
+        // this.rollDice();
     }
     
     sendToHell() {
@@ -324,7 +348,8 @@ class Play extends Phaser.Scene {
         }
         
         // roll dice/spawn new ghost
-        this.rollDice();
+        this.movingHellFlag = true
+        // this.rollDice();
     }
     
     alcCalc() {
