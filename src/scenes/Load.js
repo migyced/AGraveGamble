@@ -53,9 +53,13 @@ class Load extends Phaser.Scene {
         this.load.text('badQuotes', 'assets/text/bad.txt');
 
         //Audio
-
+        this.load.audio('backgroundMusic', 'assets/audio/Game2Music.mp3');
         this.load.audio('correctSFX', 'assets/audio/Yes_V4.wav');
         this.load.audio('wrongSFX', 'assets/audio/No_V2.wav');
+    }
+
+    create(){
+        music = game.sound.add('backgroundMusic');
     }
 
     update(){

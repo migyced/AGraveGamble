@@ -23,6 +23,8 @@ class Play extends Phaser.Scene {
         var alcohol_3 = this.add.sprite(game.config.width/2-290, game.config.height/2+35,'alcohol_3');
         var progressbar_1 = this.add.sprite(game.config.width/2-290, game.config.height/2-55,'progressbar_1');
         var progressbar_1_fill = this.add.sprite(game.config.width/2-290, game.config.height/2-55,'progressbar_1_fill');
+        this.correctSFX = this.sound.add('correctSFX');
+        this.wrongSFX = this.sound.add('wrongSFX');
 
         // initialize alcohol
         this.alcohol = 0;
@@ -98,6 +100,10 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        //music loop?
+        if(!music.isPlaying){
+            music.play();
+        }
         //keeps the background refreshing
         this.add.sprite(game.config.width/2, game.config.height/2,'main_bg');
 
@@ -229,6 +235,7 @@ class Play extends Phaser.Scene {
     sendToHeaven() {
         if (this.drank) {
             // play correct sound
+            this.correctSFX.play();
             // increase correct number
             this.correct++;
             // print out score - REMOVE LATER
@@ -237,6 +244,7 @@ class Play extends Phaser.Scene {
             this.alcohol -= 1;
         } else if (this.heaven) {
             // play correct sound
+            this.correctSFX.play();
             this.correct++;
             // print out score - REMOVE LATER
             this.scoreText = this.add.text(borderPadding, borderPadding + 240, "Number of Ghosts Correct: " + this.correct, this.textConfig);
@@ -247,6 +255,7 @@ class Play extends Phaser.Scene {
             }
         } else {
             // play incorrect sound
+            this.wrongSFX.play();
         }
         
         // roll dice/spawn new ghost
@@ -256,6 +265,7 @@ class Play extends Phaser.Scene {
     sendToHell() {
         if (this.drank) {
             // play correct sound
+            this.correctSFX.play();
             // increase correct number
             this.correct++;
             // print out score - REMOVE LATER
@@ -264,6 +274,7 @@ class Play extends Phaser.Scene {
             this.alcohol -= 1;
         } else if (!this.heaven) {
             // play correct sound
+            this.correctSFX.play();
             this.correct++;
             // print out score - REMOVE LATER
             this.scoreText = this.add.text(borderPadding, borderPadding + 240, "Number of Ghosts Correct: " + this.correct, this.textConfig);
@@ -274,6 +285,7 @@ class Play extends Phaser.Scene {
             }
         } else {
             // play incorrect sound
+            this.wrongSFX.play();
         }
         
         // roll dice/spawn new ghost
