@@ -80,30 +80,25 @@ class Play extends Phaser.Scene {
         this.textConfig = {
             fontFamily: 'CustomFont',
             fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            maxWidth: '200px',
-            height: 'auto',
-            textOverflow: 'hidden'
-        }
-        
-        this.dialogueConfig = {
-            fontFamily: 'CustomFont',
-            fontSize: '28px',
             color: '#f5f5dc',
             align: 'right',
             padding: {
                 top: 5,
                 bottom: 5,
             },
-            maxWidth: '200px',
-            height: 'auto',
-            textOverflow: 'hidden'
+            
+        }
+        
+        this.dialogueConfig = {
+            fontFamily: 'CustomFont',
+            fontSize: '28px',
+            color: '#f5f5dc',
+            align: 'left',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            wordWrap: {width: 275, useAdvancedWrap: true}
         }
         // initial roll of dice - would player have to roll dice somehow?
         this.rollDice();
@@ -184,21 +179,14 @@ class Play extends Phaser.Scene {
         // had to destroy all text so it wouldn't rewrite itself
         if (this.alcoholText) {
             this.alcoholText.destroy();
-            this.heavenText.destroy();
             this.dialogueText.destroy();
         }
         
         //text for ghost refreshing
-        this.dialogueText = this.add.text(game.config.width / 2 + 15, game.config.height / 10 - 3, this.quote, this.dialogueConfig);
+        this.dialogueText = this.add.text(game.config.width / 2 + 5, game.config.height / 10 - 15, this.quote, this.dialogueConfig);
 
         //debugging text that appears in orange
-        this.alcoholText = this.add.text(borderPadding, borderPadding, "Alcohol: " + this.alcohol, this.dialogueConfig);
-        if (this.heaven) {
-            this.heavenText = this.add.text(borderPadding, borderPadding + 200, "Heaven", this.dialogueConfig);
-        } else {
-            this.heavenText = this.add.text(borderPadding, borderPadding + 200, "Hell", this.dialogueConfig);
-        }
-        
+        this.alcoholText = this.add.text(borderPadding, borderPadding, "Alcohol: " + this.alcohol, this.textConfig);     
         
         this.progressbar_1_fill.setScale(1, this.alcohol);
         
