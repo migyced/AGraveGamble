@@ -133,13 +133,13 @@ class Play extends Phaser.Scene {
         // button functionality
         this.input.on('gameobjectdown', (pointer, gameObject, event, game) => {
             if (!this.gameOver) {
-                if (gameObject == this.button_heaven){
+                if (gameObject == this.button_heaven && !this.movingHeavenFlag && !this.movingHellFlag){
                     this.sendToHeaven();
                 }   
-                if (gameObject == this.button_hell){
+                if (gameObject == this.button_hell && !this.movingHeavenFlag && !this.movingHellFlag){
                     this.sendToHell();
                 } 
-                if (gameObject == this.alcRectangle && this.alcohol >= this.maxAlcohol) {
+                if (gameObject == this.alcRectangle && this.alcohol >= this.maxAlcohol && !this.movingHeavenFlag && !this.movingHellFlag) {
                     this.wine.play();
                     this.drank = true;
                     // update alcohol
@@ -197,17 +197,17 @@ class Play extends Phaser.Scene {
         
         if (!this.gameOver) {            
             // player picked heaven for ghost
-            if (Phaser.Input.Keyboard.JustDown(keyUP)) {
+            if (Phaser.Input.Keyboard.JustDown(keyUP) && !this.movingHeavenFlag && !this.movingHellFlag) {
                 this.sendToHeaven();
             }
             
             // player picked hell for ghost
-            if (Phaser.Input.Keyboard.JustDown(keyDOWN)) {
+            if (Phaser.Input.Keyboard.JustDown(keyDOWN) && !this.movingHeavenFlag && !this.movingHellFlag) {
                 this.sendToHell();
             }
             
             // player drank alcohol
-            if (Phaser.Input.Keyboard.JustDown(keyLEFT) && this.alcohol >= game.settings.maxAlcohol) {
+            if (Phaser.Input.Keyboard.JustDown(keyLEFT) && this.alcohol >= game.settings.maxAlcohol && !this.movingHeavenFlag && !this.movingHellFlag) {
                 this.wine.play();
                 this.drank = true;
                 // update alcohol
