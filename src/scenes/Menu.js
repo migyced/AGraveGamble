@@ -4,9 +4,6 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
-        // load audio
-        // this.load.audio('sfx_select', './assets/blip_select12.wav');
-        // this.load.image('menu', 'assets/main_menu.png');
     }
 
     create() {
@@ -38,9 +35,16 @@ class Menu extends Phaser.Scene {
 
         // define keys
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        
+        music.play();
+        //this.sound.setDecodedCallback(music, play, this);
     }
 
     update() {
+        //music loop?
+        if(!music.isPlaying){
+            music.play();
+        }
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
           // Novice mode
           game.settings = {

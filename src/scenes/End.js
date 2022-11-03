@@ -4,7 +4,7 @@ class End extends Phaser.Scene {
     }
 
     preload(){
-        this.load.image('end', 'assets/end_screen.png');
+        
     }
 
     create(){
@@ -17,6 +17,11 @@ class End extends Phaser.Scene {
     }
 
     update(){
+        //music loop?
+        if(!music.isPlaying){
+            music.play();
+        }
+        
         if(Phaser.Input.Keyboard.JustDown(keyUP)){
             this.scene.start("playScene");
         }

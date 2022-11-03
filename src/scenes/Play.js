@@ -4,11 +4,7 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.text('goodQuotes', 'assets/good.txt');
-        this.load.text('goodNeutralQuotes', 'assets/good_neutral.txt');
-        this.load.text('neutralQuotes', 'assets/neutral.txt');
-        this.load.text('badNeutralQuotes', 'assets/bad_neutral.txt');
-        this.load.text('badQuotes', 'assets/bad.txt');
+
     }
 
     create() {
@@ -27,6 +23,8 @@ class Play extends Phaser.Scene {
         var alcohol_3 = this.add.sprite(game.config.width/2-290, game.config.height/2+35,'alcohol_3');
         var progressbar_1 = this.add.sprite(game.config.width/2-290, game.config.height/2-55,'progressbar_1');
         var progressbar_1_fill = this.add.sprite(game.config.width/2-290, game.config.height/2-55,'progressbar_1_fill');
+        this.correctSFX = this.sound.add('correctSFX');
+        this.wrongSFX = this.sound.add('wrongSFX');
 
         // initialize alcohol
         this.alcohol = 0;
@@ -46,7 +44,7 @@ class Play extends Phaser.Scene {
         
         // universal text config for printing out mechanics
         this.textConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'CustomFont',
             fontSize: '28px',
             backgroundColor: '#F3B141',
             color: '#843605',
@@ -57,10 +55,24 @@ class Play extends Phaser.Scene {
             },
         }
         
+        this.dialogueConfig = {
+            fontFamily: 'CustomFont',
+            fontSize: '28px',
+            color: '#f5f5dc',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+        }
         // initial roll of dice - would player have to roll dice somehow?
         this.rollDice();
         
         // initialize ghost sprite here
+
+        // ghost dialogue
+        this.quote = this.chooseQuote(this.diceSum);
+        this.add.text(game.config.width/2 + 15, game.config.height/10 -3, this.quote, this.dialogueConfig);
 
         // GAME OVER flag
         this.gameOver = false;
@@ -88,24 +100,38 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        
+        //music loop?
+        if(!music.isPlaying){
+            music.play();
+        }
+        //keeps the background refreshing
+        this.add.sprite(game.config.width/2, game.config.height/2,'main_bg');
+
+        //text for ghost refreshing
+        this.add.text(game.config.width/2 + 15, game.config.height/10 -3, this.quote, this.dialogueConfig);
+
+        //debugging text that appears in orange
+        this.alcoholText = this.add.text(borderPadding, borderPadding, "Alcohol: " + this.alcohol, this.textConfig);
+        this.die1Text = this.add.text(borderPadding, borderPadding + 40, "Dice 1: " + this.die1, this.textConfig);
+        this.die2Text = this.add.text(borderPadding, borderPadding + 80, "Dice 2: " + this.die2, this.textConfig);
+        this.die3Text = this.add.text(borderPadding, borderPadding + 120, "Dice 3: " + this.die3, this.textConfig);
+        this.diceSumText = this.add.text(borderPadding, borderPadding + 160, "Dice Sum: " + this.diceSum, this.textConfig);
+        this.scoreText = this.add.text(borderPadding, borderPadding + 240, "Number of Ghosts Correct: " + this.correct, this.textConfig);
+        if (this.heaven) {
+            this.heavenText = this.add.text(borderPadding, borderPadding + 200, "Heaven", this.textConfig);
+        } else {
+            this.heavenText = this.add.text(borderPadding, borderPadding + 200, "Hell", this.textConfig);
+        }
+
         // check key input for restart / menu
         if(this.gameOver){
             this.scene.start("endScene");
         }
-        /*if(this.gameOver && Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            this.scene.restart();
-        }
-        if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-            this.scene.start("menuScene");
-        }*/
         
         if (!this.gameOver) {
             // space to roll dice again to see mechanic - REMOVE LATER
             if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
                 this.rollDice();
-                //print the quote related to the dice sum
-                console.log(this.chooseQuote(this.diceSum));
             }
             
             // player picked heaven for ghost
@@ -178,6 +204,8 @@ class Play extends Phaser.Scene {
         }
 
         //return diceSum
+        this.quote = this.chooseQuote(this.diceSum);
+        this.add.text(game.config.width/2 + 15, game.config.height/10 -3, this.quote, this.dialogueConfig);
         return this.diceSum;
     }
     
@@ -207,6 +235,7 @@ class Play extends Phaser.Scene {
     sendToHeaven() {
         if (this.drank) {
             // play correct sound
+            this.correctSFX.play();
             // increase correct number
             this.correct++;
             // print out score - REMOVE LATER
@@ -215,6 +244,7 @@ class Play extends Phaser.Scene {
             this.alcohol -= 1;
         } else if (this.heaven) {
             // play correct sound
+            this.correctSFX.play();
             this.correct++;
             // print out score - REMOVE LATER
             this.scoreText = this.add.text(borderPadding, borderPadding + 240, "Number of Ghosts Correct: " + this.correct, this.textConfig);
@@ -225,6 +255,7 @@ class Play extends Phaser.Scene {
             }
         } else {
             // play incorrect sound
+            this.wrongSFX.play();
         }
         
         // roll dice/spawn new ghost
@@ -234,6 +265,7 @@ class Play extends Phaser.Scene {
     sendToHell() {
         if (this.drank) {
             // play correct sound
+            this.correctSFX.play();
             // increase correct number
             this.correct++;
             // print out score - REMOVE LATER
@@ -242,6 +274,7 @@ class Play extends Phaser.Scene {
             this.alcohol -= 1;
         } else if (!this.heaven) {
             // play correct sound
+            this.correctSFX.play();
             this.correct++;
             // print out score - REMOVE LATER
             this.scoreText = this.add.text(borderPadding, borderPadding + 240, "Number of Ghosts Correct: " + this.correct, this.textConfig);
@@ -252,6 +285,7 @@ class Play extends Phaser.Scene {
             }
         } else {
             // play incorrect sound
+            this.wrongSFX.play();
         }
         
         // roll dice/spawn new ghost
@@ -271,29 +305,23 @@ class Play extends Phaser.Scene {
         let cache = this.cache.text;
         let allWords = cache.get(inFile);
         this.tempArray = allWords.split('\n');
-        //this.finalArray = [[]];  
-        //this.node;
         for(let i = 0; i < this.tempArray.length; i++){
-            /*this.node = this.tempArray[i].split(',');
-            this.node[1] = this.node[1].trim();
-            this.finalArray[i] = this.node;*/
             this.tempArray[i] = this.tempArray[i].trim();
         }
-        //return this.finalArray;
         return this.tempArray;
     }
 
     chooseQuote(inNum){
         if(3<= inNum && inNum <= 5){
-            return this.badQuotes[Math.floor(Math.random() * this.badQuotes.length)];
+            return this.goodQuotes[Math.floor(Math.random() * this.goodQuotes.length)];
         }else if(5 < inNum && inNum <= 8){
-            return this.badNeutralQuotes[Math.floor(Math.random() * this.badNeutralQuotes.length)];
+            return this.goodNeutralQuotes[Math.floor(Math.random() * this.goodNeutralQuotes.length)];
         }else if(8 < inNum && inNum <= 12){
             return this.neutralQuotes[Math.floor(Math.random() * this.neutralQuotes.length)];
         }else if(12 < inNum && inNum <= 15){
-            return this.goodNeutralQuotes[Math.floor(Math.random() * this.goodNeutralQuotes.length)];
+            return this.badNeutralQuotes[Math.floor(Math.random() * this.badNeutralQuotes.length)];
         }else if(15 < inNum && inNum <= 18){
-            return this.goodQuotes[Math.floor(Math.random() * this.goodQuotes.length)];
+            return this.badQuotes[Math.floor(Math.random() * this.badQuotes.length)];
         }
     }
 }

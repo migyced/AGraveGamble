@@ -13,3 +13,4 @@ let borderPadding = borderUISize / 3;
 
 // reserve keyboard variables
 let keyF, keyLEFT, keySPACE, keyUP, keyDOWN;
+let music;
