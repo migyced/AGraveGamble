@@ -58,7 +58,7 @@ class Load extends Phaser.Scene {
         this.load.audio('correctSFX', 'assets/audio/Yes_V4.wav');
         this.load.audio('wrongSFX', 'assets/audio/No_V2.wav');
         this.load.audio('Wine', 'assets/audio/Wine.wav');
-        this.load.audio('Dice', 'assets/audio/Dice_shortened.ogg');
+        this.load.audio('Dice', 'assets/audio/Dice_shortened.wav');
     }
 
     create(){
