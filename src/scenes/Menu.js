@@ -27,17 +27,23 @@ class Menu extends Phaser.Scene {
             useHandCursor: true,
         });
 
-        // show menu text
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'START GAME', menuConfig).setOrigin(0.5);
-        menuConfig.backgroundColor = '#00FF00';
-        menuConfig.color = '#000';
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press SPACE to start', menuConfig).setOrigin(0.5);
+        // play button functionality
+        this.input.on('gameobjectdown', (pointer, gameObject, event) => {
+            if (gameObject == this.playButton){
+               // Novice mode
+                game.settings = {
+                    gameTimer: 120000,
+                    maxAlcohol: 1,
+                }
+                // this.sound.play('sfx_select');
+                this.scene.start("playScene");
+            }   
+        });
 
         // define keys
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
         music.play();
-        //this.sound.setDecodedCallback(music, play, this);
     }
 
     update() {
@@ -51,22 +57,7 @@ class Menu extends Phaser.Scene {
             gameTimer: 120000,
             maxAlcohol: 3,
           }
-          // this.sound.play('sfx_select');
           this.scene.start("playScene");    
         }
-
-        // play button functionality, BUGGY
-        this.input.on('gameobjectdown', (pointer, gameObject, event) => {
-            if (gameObject == this.playButton){
-               // Novice mode
-                game.settings = {
-                    gameTimer: 120000,
-                    maxAlcohol: 3,
-                }
-                // this.sound.play('sfx_select');
-                this.scene.start("playScene");
-            }   
-        });
-        
       }
 }
