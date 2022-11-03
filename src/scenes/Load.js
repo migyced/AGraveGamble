@@ -60,7 +60,8 @@ class Load extends Phaser.Scene {
 
     create(){
         music = game.sound.add('backgroundMusic');
-    }
+        music.volume = 0.4;
+       }
 
     update(){
         this.scene.start('menuScene');
