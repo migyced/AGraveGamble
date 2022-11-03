@@ -4,11 +4,11 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.text('goodQuotes', 'assets/good.txt');
-        this.load.text('goodNeutralQuotes', 'assets/good_neutral.txt');
-        this.load.text('neutralQuotes', 'assets/neutral.txt');
-        this.load.text('badNeutralQuotes', 'assets/bad_neutral.txt');
-        this.load.text('badQuotes', 'assets/bad.txt');
+        this.load.text('goodQuotes', 'assets/text/good.txt');
+        this.load.text('goodNeutralQuotes', 'assets/text/good_neutral.txt');
+        this.load.text('neutralQuotes', 'assets/text/neutral.txt');
+        this.load.text('badNeutralQuotes', 'assets/text/bad_neutral.txt');
+        this.load.text('badQuotes', 'assets/text/bad.txt');
     }
 
     create() {
@@ -285,15 +285,15 @@ class Play extends Phaser.Scene {
 
     chooseQuote(inNum){
         if(3<= inNum && inNum <= 5){
-            return this.badQuotes[Math.floor(Math.random() * this.badQuotes.length)];
+            return this.goodQuotes[Math.floor(Math.random() * this.goodQuotes.length)];
         }else if(5 < inNum && inNum <= 8){
-            return this.badNeutralQuotes[Math.floor(Math.random() * this.badNeutralQuotes.length)];
+            return this.goodNeutralQuotes[Math.floor(Math.random() * this.goodNeutralQuotes.length)];
         }else if(8 < inNum && inNum <= 12){
             return this.neutralQuotes[Math.floor(Math.random() * this.neutralQuotes.length)];
         }else if(12 < inNum && inNum <= 15){
-            return this.goodNeutralQuotes[Math.floor(Math.random() * this.goodNeutralQuotes.length)];
+            return this.badNeutralQuotes[Math.floor(Math.random() * this.badNeutralQuotes.length)];
         }else if(15 < inNum && inNum <= 18){
-            return this.goodQuotes[Math.floor(Math.random() * this.goodQuotes.length)];
+            return this.badQuotes[Math.floor(Math.random() * this.badQuotes.length)];
         }
     }
 }
