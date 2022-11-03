@@ -46,7 +46,7 @@ class Play extends Phaser.Scene {
         
         // universal text config for printing out mechanics
         this.textConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'CustomFont',
             fontSize: '28px',
             backgroundColor: '#F3B141',
             color: '#843605',
@@ -271,15 +271,9 @@ class Play extends Phaser.Scene {
         let cache = this.cache.text;
         let allWords = cache.get(inFile);
         this.tempArray = allWords.split('\n');
-        //this.finalArray = [[]];  
-        //this.node;
         for(let i = 0; i < this.tempArray.length; i++){
-            /*this.node = this.tempArray[i].split(',');
-            this.node[1] = this.node[1].trim();
-            this.finalArray[i] = this.node;*/
             this.tempArray[i] = this.tempArray[i].trim();
         }
-        //return this.finalArray;
         return this.tempArray;
     }
 
