@@ -84,6 +84,9 @@ class Play extends Phaser.Scene {
                 top: 5,
                 bottom: 5,
             },
+            maxWidth: '200px',
+            height: 'auto',
+            textOverflow: 'hidden'
         }
         
         this.dialogueConfig = {
@@ -95,6 +98,9 @@ class Play extends Phaser.Scene {
                 top: 5,
                 bottom: 5,
             },
+            maxWidth: '200px',
+            height: 'auto',
+            textOverflow: 'hidden'
         }
         // initial roll of dice - would player have to roll dice somehow?
         this.rollDice();
