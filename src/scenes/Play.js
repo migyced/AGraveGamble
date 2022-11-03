@@ -4,7 +4,8 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-
+        this.maxAlcohol = game.settings.maxAlcohol;
+        console.log(game.settings.maxAlcohol);
     }
 
     create() {
@@ -50,6 +51,10 @@ class Play extends Phaser.Scene {
         
         this.correctSFX = this.sound.add('correctSFX');
         this.wrongSFX = this.sound.add('wrongSFX');
+        this.wine = this.sound.add('Wine');
+        this.wine.volume = 10;
+        this.diceSound = this.sound.add('Dice');
+        this.diceSound.volume = 5;
 
 
         // initialize alcohol
@@ -122,7 +127,7 @@ class Play extends Phaser.Scene {
         
         
         // button functionality
-        this.input.on('gameobjectdown', (pointer, gameObject, event) => {
+        this.input.on('gameobjectdown', (pointer, gameObject, event, game) => {
             if (!this.gameOver) {
                 if (gameObject == this.button_heaven){
                     this.sendToHeaven();
@@ -130,8 +135,12 @@ class Play extends Phaser.Scene {
                 if (gameObject == this.button_hell){
                     this.sendToHell();
                 } 
-                if (gameObject == this.alcRectangle && this.alcohol >= 1) {
+                if (gameObject == this.alcRectangle && this.alcohol >= this.maxAlcohol) {
+                    this.wine.play();
+                    console.log('reach');
                     this.drank = true;
+                    // update alcohol
+                    this.alcohol -= 1;
                 }
             }
         });
@@ -180,13 +189,18 @@ class Play extends Phaser.Scene {
             }
             
             // player drank alcohol
-            if(Phaser.Input.Keyboard.JustDown(keyLEFT) && this.alcohol >= 1) {
+            if (Phaser.Input.Keyboard.JustDown(keyLEFT) && this.alcohol >= game.settings.maxAlcohol) {
+                this.wine.play();
+                console.log('reach');
                 this.drank = true;
+                // update alcohol
+                this.alcohol -= 1;
             }
         }
     }
     
     rollDice() {
+        this.diceSound.play();
         this.die1Sprite.anims.play('roll');
         this.die2Sprite.anims.play('roll');
         this.die3Sprite.anims.play('roll');
@@ -266,16 +280,14 @@ class Play extends Phaser.Scene {
             this.correctSFX.play();
             // increase correct number
             this.correct++;
-            // update alcohol
-            this.alcohol -= 1;
         } else if (this.heaven) {
             // play correct sound
             this.correctSFX.play();
             this.correct++;
             // update alcohol and make sure it isn't past the max
             this.alcohol += this.alcCalc();
-            if (this.alcohol > 3) {
-                this.alcohol = 3;
+            if (this.alcohol > game.settings.maxAlcohol) {
+                this.alcohol = game.settings.maxAlcohol;
             }
         } else {
             // play incorrect sound
@@ -300,8 +312,8 @@ class Play extends Phaser.Scene {
             this.correct++;
             // update alcohol and make sure it isn't past the max
             this.alcohol += this.alcCalc();
-            if (this.alcohol > 3) {
-                this.alcohol = 3;
+            if (this.alcohol > game.settings.maxAlcohol) {
+                this.alcohol = game.settings.maxAlcohol;
             }
         } else {
             // play incorrect sound

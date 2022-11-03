@@ -57,12 +57,14 @@ class Load extends Phaser.Scene {
         this.load.audio('backgroundMusic', 'assets/audio/Game2Music.mp3');
         this.load.audio('correctSFX', 'assets/audio/Yes_V4.wav');
         this.load.audio('wrongSFX', 'assets/audio/No_V2.wav');
+        this.load.audio('Wine', 'assets/audio/Wine.wav');
+        this.load.audio('Dice', 'assets/audio/Dice_shortened.ogg');
     }
 
     create(){
         music = game.sound.add('backgroundMusic');
         music.volume = 0.4;
-       }
+    }
 
     update(){
         this.scene.start('menuScene');

@@ -33,7 +33,7 @@ class Menu extends Phaser.Scene {
                // Novice mode
                 game.settings = {
                     gameTimer: 120000,
-                    maxAlcohol: 3,
+                    maxAlcohol: 1,
                 }
                 // this.sound.play('sfx_select');
                 this.scene.start("playScene");
