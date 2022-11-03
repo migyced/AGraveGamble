@@ -44,6 +44,18 @@ class Load extends Phaser.Scene {
         this.load.image('main_bg', './assets/main_bg.png')
         this.load.image('main_menu', './assets/main_menu.png')
         this.load.image('menu_bg', './assets/menu_bg.png')
+
+        // Text
+        this.load.text('goodQuotes', 'assets/text/good.txt');
+        this.load.text('goodNeutralQuotes', 'assets/text/good_neutral.txt');
+        this.load.text('neutralQuotes', 'assets/text/neutral.txt');
+        this.load.text('badNeutralQuotes', 'assets/text/bad_neutral.txt');
+        this.load.text('badQuotes', 'assets/text/bad.txt');
+
+        //Audio
+
+        this.load.audio('correctSFX', 'assets/audio/Yes_V4.wav');
+        this.load.audio('wrongSFX', 'assets/audio/No_V2.wav');
     }
 
     update(){

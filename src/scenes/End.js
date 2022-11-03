@@ -4,7 +4,7 @@ class End extends Phaser.Scene {
     }
 
     preload(){
-        this.load.image('end', 'assets/end_screen.png');
+        
     }
 
     create(){

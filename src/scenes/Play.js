@@ -4,11 +4,7 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.text('goodQuotes', 'assets/text/good.txt');
-        this.load.text('goodNeutralQuotes', 'assets/text/good_neutral.txt');
-        this.load.text('neutralQuotes', 'assets/text/neutral.txt');
-        this.load.text('badNeutralQuotes', 'assets/text/bad_neutral.txt');
-        this.load.text('badQuotes', 'assets/text/bad.txt');
+
     }
 
     create() {
@@ -57,10 +53,24 @@ class Play extends Phaser.Scene {
             },
         }
         
+        this.dialogueConfig = {
+            fontFamily: 'CustomFont',
+            fontSize: '28px',
+            color: '#f5f5dc',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+        }
         // initial roll of dice - would player have to roll dice somehow?
         this.rollDice();
         
         // initialize ghost sprite here
+
+        // ghost dialogue
+        this.quote = this.chooseQuote(this.diceSum);
+        this.add.text(game.config.width/2 + 15, game.config.height/10 -3, this.quote, this.dialogueConfig);
 
         // GAME OVER flag
         this.gameOver = false;
@@ -88,24 +98,34 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        
+        //keeps the background refreshing
+        this.add.sprite(game.config.width/2, game.config.height/2,'main_bg');
+
+        //text for ghost refreshing
+        this.add.text(game.config.width/2 + 15, game.config.height/10 -3, this.quote, this.dialogueConfig);
+
+        //debugging text that appears in orange
+        this.alcoholText = this.add.text(borderPadding, borderPadding, "Alcohol: " + this.alcohol, this.textConfig);
+        this.die1Text = this.add.text(borderPadding, borderPadding + 40, "Dice 1: " + this.die1, this.textConfig);
+        this.die2Text = this.add.text(borderPadding, borderPadding + 80, "Dice 2: " + this.die2, this.textConfig);
+        this.die3Text = this.add.text(borderPadding, borderPadding + 120, "Dice 3: " + this.die3, this.textConfig);
+        this.diceSumText = this.add.text(borderPadding, borderPadding + 160, "Dice Sum: " + this.diceSum, this.textConfig);
+        this.scoreText = this.add.text(borderPadding, borderPadding + 240, "Number of Ghosts Correct: " + this.correct, this.textConfig);
+        if (this.heaven) {
+            this.heavenText = this.add.text(borderPadding, borderPadding + 200, "Heaven", this.textConfig);
+        } else {
+            this.heavenText = this.add.text(borderPadding, borderPadding + 200, "Hell", this.textConfig);
+        }
+
         // check key input for restart / menu
         if(this.gameOver){
             this.scene.start("endScene");
         }
-        /*if(this.gameOver && Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            this.scene.restart();
-        }
-        if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-            this.scene.start("menuScene");
-        }*/
         
         if (!this.gameOver) {
             // space to roll dice again to see mechanic - REMOVE LATER
             if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
                 this.rollDice();
-                //print the quote related to the dice sum
-                console.log(this.chooseQuote(this.diceSum));
             }
             
             // player picked heaven for ghost
@@ -178,6 +198,8 @@ class Play extends Phaser.Scene {
         }
 
         //return diceSum
+        this.quote = this.chooseQuote(this.diceSum);
+        this.add.text(game.config.width/2 + 15, game.config.height/10 -3, this.quote, this.dialogueConfig);
         return this.diceSum;
     }
     
