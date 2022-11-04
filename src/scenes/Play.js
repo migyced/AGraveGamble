@@ -27,8 +27,11 @@ class Play extends Phaser.Scene {
         this.button_hell.setInteractive({
             useHandCursor: true,
         });
-
         this.manual = this.add.sprite(game.config.width/2+230, game.config.height/2+220,'manual');
+        this.manual.setInteractive({
+            useHandCursor: true,
+        });
+
         this.cup_2 = this.add.sprite(game.config.width/2-10, game.config.height/2+130,'cup_2');
         this.cup_1 = this.add.sprite(game.config.width/2+70, game.config.height/2+130,'cup_1');
         this.alcohol_1 = this.add.sprite(game.config.width/2-295, game.config.height/2+125,'alcohol_1');
@@ -41,6 +44,12 @@ class Play extends Phaser.Scene {
         this.die2Sprite = this.add.sprite(game.config.width/2-110, game.config.height/2+125, 'dice_sheet');
         this.die3Sprite = this.add.sprite(game.config.width/2-105, game.config.height/2+90, 'dice_sheet');
 
+        this.open_manual = this.add.sprite(game.config.width/2, game.config.height/2+40,'manual_open').setVisible(0).setScale(1.3);
+        this.open_manual.setInteractive({
+            useHandCursor: true,
+        });
+
+        this.manual_open = false;
         this.movingHeavenFlag = false
         this.movingHellFlag = false
         
@@ -138,17 +147,27 @@ class Play extends Phaser.Scene {
         // button functionality
         this.input.on('gameobjectdown', (pointer, gameObject, event, game) => {
             if (!this.gameOver) {
-                if (gameObject == this.button_heaven && !this.movingHeavenFlag && !this.movingHellFlag){
+                if (gameObject == this.button_heaven && !this.movingHeavenFlag && !this.movingHellFlag && !this.manual_open){
                     this.sendToHeaven();
                 }   
-                if (gameObject == this.button_hell && !this.movingHeavenFlag && !this.movingHellFlag){
+                if (gameObject == this.button_hell && !this.movingHeavenFlag && !this.movingHellFlag && !this.manual_open){
                     this.sendToHell();
                 } 
-                if (gameObject == this.alcRectangle && this.alcohol >= this.maxAlcohol && !this.movingHeavenFlag && !this.movingHellFlag) {
+                if (gameObject == this.alcRectangle && this.alcohol >= this.maxAlcohol && !this.movingHeavenFlag && !this.movingHellFlag && !this.manual_open) {
                     this.wine.play();
                     this.drank = true;
                     // update alcohol
                     this.alcohol -= 1;
+                }
+                if (gameObject == this.manual && !this.manual_open){
+                    this.manual_open = true;
+                    this.manual.setVisible(0);
+                    this.open_manual.setVisible(1);
+                }
+                if (gameObject == this.open_manual && this.manual_open){
+                    this.manual_open = false;
+                    this.manual.setVisible(1);
+                    this.open_manual.setVisible(0);
                 }
             }
         });
@@ -204,17 +223,17 @@ class Play extends Phaser.Scene {
         
         if (!this.gameOver) {            
             // player picked heaven for ghost
-            if (Phaser.Input.Keyboard.JustDown(keyUP) && !this.movingHeavenFlag && !this.movingHellFlag) {
+            if (Phaser.Input.Keyboard.JustDown(keyUP) && !this.movingHeavenFlag && !this.movingHellFlag && !this.manual_open) {
                 this.sendToHeaven();
             }
             
             // player picked hell for ghost
-            if (Phaser.Input.Keyboard.JustDown(keyDOWN) && !this.movingHeavenFlag && !this.movingHellFlag) {
+            if (Phaser.Input.Keyboard.JustDown(keyDOWN) && !this.movingHeavenFlag && !this.movingHellFlag && !this.manual_open) {
                 this.sendToHell();
             }
             
             // player drank alcohol
-            if (Phaser.Input.Keyboard.JustDown(keyLEFT) && this.alcohol >= game.settings.maxAlcohol && !this.movingHeavenFlag && !this.movingHellFlag) {
+            if (Phaser.Input.Keyboard.JustDown(keyLEFT) && this.alcohol >= game.settings.maxAlcohol && !this.movingHeavenFlag && !this.movingHellFlag && !this.manual_open) {
                 this.wine.play();
                 this.drank = true;
                 // update alcohol
