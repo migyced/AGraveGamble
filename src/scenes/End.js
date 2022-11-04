@@ -69,8 +69,6 @@ class End extends Phaser.Scene {
             }else if(iGoodNeutralBad == 5){
                 this.add.text(this.xConst, this.yConst, this.bad_bad_ending[firstIncorrect], this.dialogueConfig).setOrigin(0.5);
             }
-        }else if(incorrectGhosts == 0 && correctGhosts == 0){
-            console.log("Loser!");
         }else{
             console.log("Winner!");
             if(cGoodNeutralBad == 1){
