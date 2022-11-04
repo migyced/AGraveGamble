@@ -14,7 +14,8 @@ class Play extends Phaser.Scene {
             useHandCursor: true,
         });
         this.bg = this.add.sprite(game.config.width/2, game.config.height/2,'main_bg');
-        this.base_ghost = this.add.sprite(game.config.width/2-100, game.config.height/2-75,'base_ghost');
+        this.base_ghost = this.add.sprite(game.config.width/2-100, game.config.height/2-75,'ghost_sheet');
+
         this.desk = this.add.sprite(game.config.width/2, (game.config.height/2)+108,'desk');
         this.dialogue_box = this.add.sprite(game.config.width/2+140, game.config.height/2-130,'dialogue_box');
 
@@ -27,7 +28,6 @@ class Play extends Phaser.Scene {
             useHandCursor: true,
         });
 
-        
         this.manual = this.add.sprite(game.config.width/2+230, game.config.height/2+220,'manual');
         this.cup_2 = this.add.sprite(game.config.width/2-10, game.config.height/2+130,'cup_2');
         this.cup_1 = this.add.sprite(game.config.width/2+70, game.config.height/2+130,'cup_1');
@@ -51,6 +51,13 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('dice_sheet', { start: 0, end: 5, first: 0}),
             frameRate: 10
         });
+        this.anims.create({
+            key: 'ghost_anim',
+            frames: this.anims.generateFrameNumbers('ghost_sheet', {start: 0, end: 5, first: 0}),
+            frameRate: 8,
+            repeat: -1
+        })
+        this.base_ghost.anims.play('ghost_anim');
         
         this.correctSFX = this.sound.add('correctSFX');
         this.wrongSFX = this.sound.add('wrongSFX');
@@ -58,7 +65,6 @@ class Play extends Phaser.Scene {
         this.wine.volume = 10;
         this.diceSound = this.sound.add('Dice');
         this.diceSound.volume = 5;
-
 
         // initialize alcohol
         this.alcohol = 0;
@@ -129,7 +135,6 @@ class Play extends Phaser.Scene {
         //     this.rollDiceTest(x);
         // }
         
-        
         // button functionality
         this.input.on('gameobjectdown', (pointer, gameObject, event, game) => {
             if (!this.gameOver) {
@@ -147,10 +152,11 @@ class Play extends Phaser.Scene {
                 }
             }
         });
+        
     }
 
     update() {
-        // music loop?
+        // music loop
         if(!music.isPlaying){
             music.play();
         }        
@@ -182,6 +188,7 @@ class Play extends Phaser.Scene {
             this.dialogueText.destroy();
         }
         
+
         //text for ghost refreshing
         this.dialogueText = this.add.text(game.config.width / 2 + 5, game.config.height / 10 - 15, this.quote, this.dialogueConfig);
 
