@@ -23,6 +23,17 @@ class End extends Phaser.Scene {
             },
             wordWrap: {width: 275, useAdvancedWrap: true}
         }
+        this.scoreConfig = {
+            fontFamily: 'CustomFont',
+            fontSize: '36px',
+            color: '#f5f5dc',
+            align: 'left',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            wordWrap: {width: 275, useAdvancedWrap: true}
+        }
         var image = this.add.image(game.config.width/2, game.config.height/2,'end_bg');
         this.button_menu = this.add.image(game.config.width/2+195, game.config.height/2+110,'button_menu');
         this.button_menu.setInteractive({
@@ -58,6 +69,7 @@ class End extends Phaser.Scene {
 
         if( incorrectGhosts > correctGhosts){
             console.log("Loser!");
+            this.add.text(game.config.width/2, game.config.height/2-50, "Everything's gone wrong!", this.scoreConfig).setOrigin(0.5);
             if(iGoodNeutralBad == 1){
                 this.add.text(this.xConst, this.yConst, this.good_bad_ending[firstIncorrect], this.dialogueConfig).setOrigin(0.5);
             }else if(iGoodNeutralBad == 2){
@@ -71,6 +83,7 @@ class End extends Phaser.Scene {
             }
         }else{
             console.log("Winner!");
+            this.add.text(game.config.width/2, game.config.height/2-50, "Great job!", this.scoreConfig).setOrigin(0.5);
             if(cGoodNeutralBad == 1){
                 this.add.text(this.xConst, this.yConst, this.good_good_ending[firstCorrect], this.dialogueConfig).setOrigin(0.5);
             }else if(cGoodNeutralBad == 2){
