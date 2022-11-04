@@ -320,7 +320,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 1;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(5 < this.diceSum && this.diceSum <= 8){
                     for( let i = 0; i < this.goodNeutralQuotes.length; i++){
@@ -329,7 +329,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 2;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(8 < this.diceSum && this.diceSum <= 12){
                     for( let i = 0; i < this.neutralQuotes.length; i++){
@@ -338,7 +338,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 3;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(12 < this.diceSum && this.diceSum <= 15){
                     for( let i = 0; i < this.badNeutralQuotes.length; i++){
@@ -347,7 +347,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 4;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(15 < this.diceSum && this.diceSum <= 18){
                     for( let i = 0; i < this.badQuotes.length; i++){
@@ -356,7 +356,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 5;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }
             }
@@ -373,7 +373,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 1;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(5 < this.diceSum && this.diceSum <= 8){
                     for( let i = 0; i < this.goodNeutralQuotes.length; i++){
@@ -382,7 +382,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 2;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(8 < this.diceSum && this.diceSum <= 12){
                     for( let i = 0; i < this.neutralQuotes.length; i++){
@@ -391,7 +391,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 3;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(12 < this.diceSum && this.diceSum <= 15){
                     for( let i = 0; i < this.badNeutralQuotes.length; i++){
@@ -400,7 +400,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 4;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(15 < this.diceSum && this.diceSum <= 18){
                     for( let i = 0; i < this.badQuotes.length; i++){
@@ -409,7 +409,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 5;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }
             }
@@ -492,7 +492,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 1;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(5 < this.diceSum && this.diceSum <= 8){
                     for( let i = 0; i < this.goodNeutralQuotes.length; i++){
@@ -501,7 +501,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 2;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(8 < this.diceSum && this.diceSum <= 12){
                     for( let i = 0; i < this.neutralQuotes.length; i++){
@@ -510,7 +510,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 3;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(12 < this.diceSum && this.diceSum <= 15){
                     for( let i = 0; i < this.badNeutralQuotes.length; i++){
@@ -519,7 +519,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 4;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(15 < this.diceSum && this.diceSum <= 18){
                     for( let i = 0; i < this.badQuotes.length; i++){
@@ -528,7 +528,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 5;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }
             }
@@ -545,7 +545,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 1;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(5 < this.diceSum && this.diceSum <= 8){
                     for( let i = 0; i < this.goodNeutralQuotes.length; i++){
@@ -554,7 +554,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 2;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(8 < this.diceSum && this.diceSum <= 12){
                     for( let i = 0; i < this.neutralQuotes.length; i++){
@@ -563,7 +563,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 3;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(12 < this.diceSum && this.diceSum <= 15){
                     for( let i = 0; i < this.badNeutralQuotes.length; i++){
@@ -572,7 +572,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 4;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }else if(15 < this.diceSum && this.diceSum <= 18){
                     for( let i = 0; i < this.badQuotes.length; i++){
@@ -581,7 +581,7 @@ class Play extends Phaser.Scene {
                             cGoodNeutralBad = 5;
                         }
                     }
-                    console.log(firstCorrect);
+                    
                     fCBool = true;
                 }
             }
