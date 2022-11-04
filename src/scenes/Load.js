@@ -52,6 +52,16 @@ class Load extends Phaser.Scene {
         this.load.text('neutralQuotes', 'assets/text/neutral.txt');
         this.load.text('badNeutralQuotes', 'assets/text/bad_neutral.txt');
         this.load.text('badQuotes', 'assets/text/bad.txt');
+        this.load.text('bad_good_ending', 'assets/text/bad_good_ending.txt');
+        this.load.text('bad_bad_ending', 'assets/text/bad_bad_ending.txt');
+        this.load.text('bad_neutral_good_ending', 'assets/text/bad_neutral_good_ending.txt');
+        this.load.text('bad_neutral_bad_ending', 'assets/text/bad_neutral_bad_ending.txt');
+        this.load.text('neutral_good_ending', 'assets/text/neutral_good_ending.txt');
+        this.load.text('neutral_bad_ending', 'assets/text/neutral_bad_ending.txt');
+        this.load.text('good_neutral_good_ending', 'assets/text/good_neutral_good_ending.txt');
+        this.load.text('good_neutral_bad_ending', 'assets/text/good_neutral_bad_ending.txt');
+        this.load.text('good_good_ending', 'assets/text/good_good_ending.txt');
+        this.load.text('good_bad_ending', 'assets/text/good_bad_ending.txt');
 
         //Audio
         this.load.audio('backgroundMusic', 'assets/audio/Game2Music.mp3');

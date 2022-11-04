@@ -8,6 +8,13 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+
+        incorrectGhosts = 0;
+        correctGhosts = 0;
+        firstCorrect = -1;
+        firstIncorrect = -1;
+        fCBool = false;
+        fIBool = false;
         //create background and sprites
         this.alcRectangle = this.add.rectangle(60, game.config.height / 2 + 110, 120, 140, 0x6666ff);
         this.alcRectangle.setInteractive({
@@ -297,10 +304,108 @@ class Play extends Phaser.Scene {
             this.correctSFX.play();
             // increase correct number
             this.correct++;
+            correctGhosts++;
+            if(!fCBool){
+                if(3<= this.diceSum && this.diceSum <= 5){
+                    for( let i = 0; i < this.goodQuotes.length; i++){
+                        if(this.goodQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 1;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(5 < this.diceSum && this.diceSum <= 8){
+                    for( let i = 0; i < this.goodNeutralQuotes.length; i++){
+                        if(this.goodNeutralQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 2;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(8 < this.diceSum && this.diceSum <= 12){
+                    for( let i = 0; i < this.neutralQuotes.length; i++){
+                        if(this.neutralQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 3;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(12 < this.diceSum && this.diceSum <= 15){
+                    for( let i = 0; i < this.badNeutralQuotes.length; i++){
+                        if(this.badNeutralQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 4;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(15 < this.diceSum && this.diceSum <= 18){
+                    for( let i = 0; i < this.badQuotes.length; i++){
+                        if(this.badQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 5;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }
+            }
         } else if (this.heaven) {
             // play correct sound
             this.correctSFX.play();
             this.correct++;
+            correctGhosts++;
+            if(!fCBool){
+                if(3<= this.diceSum && this.diceSum <= 5){
+                    for( let i = 0; i < this.goodQuotes.length; i++){
+                        if(this.goodQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 1;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(5 < this.diceSum && this.diceSum <= 8){
+                    for( let i = 0; i < this.goodNeutralQuotes.length; i++){
+                        if(this.goodNeutralQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 2;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(8 < this.diceSum && this.diceSum <= 12){
+                    for( let i = 0; i < this.neutralQuotes.length; i++){
+                        if(this.neutralQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 3;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(12 < this.diceSum && this.diceSum <= 15){
+                    for( let i = 0; i < this.badNeutralQuotes.length; i++){
+                        if(this.badNeutralQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 4;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(15 < this.diceSum && this.diceSum <= 18){
+                    for( let i = 0; i < this.badQuotes.length; i++){
+                        if(this.badQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 5;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }
+            }
             // update alcohol and make sure it isn't past the max
             this.alcohol += this.alcCalc();
             if (this.alcohol > game.settings.maxAlcohol) {
@@ -309,6 +414,56 @@ class Play extends Phaser.Scene {
         } else {
             // play incorrect sound
             this.wrongSFX.play();
+            incorrectGhosts++;
+            if(!fIBool){
+                if(3<= this.diceSum && this.diceSum <= 5){
+                    for( let i = 0; i < this.goodQuotes.length; i++){
+                        if(this.goodQuotes[i] == this.quote){
+                            firstIncorrect = i;
+                            iGoodNeutralBad = 1;
+                        }
+                    }
+                    console.log(firstIncorrect);
+                    fIBool = true;
+                }else if(5 < this.diceSum && this.diceSum <= 8){
+                    for( let i = 0; i < this.goodNeutralQuotes.length; i++){
+                        if(this.goodNeutralQuotes[i] == this.quote){
+                            firstIncorrect = i;
+                            iGoodNeutralBad = 2;
+                        }
+                    }
+                    console.log(firstIncorrect);
+                    fIBool = true;
+                }else if(8 < this.diceSum && this.diceSum <= 12){
+                    for( let i = 0; i < this.neutralQuotes.length; i++){
+                        if(this.neutralQuotes[i] == this.quote){
+                            firstIncorrect = i;
+                            iGoodNeutralBad = 3;
+                        }
+                    }
+                    console.log(firstIncorrect);
+                    fIBool = true;
+                }else if(12 < this.diceSum && this.diceSum <= 15){
+                    for( let i = 0; i < this.badNeutralQuotes.length; i++){
+                        if(this.badNeutralQuotes[i] == this.quote){
+                            firstIncorrect = i;
+                            iGoodNeutralBad = 4;
+                            console.log(i);
+                        }
+                    }
+                    console.log(firstIncorrect);
+                    fIBool = true;
+                }else if(15 < this.diceSum && this.diceSum <= 18){
+                    for( let i = 0; i < this.badQuotes.length; i++){
+                        if(this.badQuotes[i] == this.quote){
+                            firstIncorrect = i;
+                            iGoodNeutralBad = 5;
+                        }
+                    }
+                    console.log(firstIncorrect);
+                    fIBool = true;
+                }
+            }
         }
         
         this.movingHeavenFlag = true;
@@ -321,10 +476,108 @@ class Play extends Phaser.Scene {
             this.correctSFX.play();
             // increase correct number
             this.correct++;
+            correctGhosts++;
+            if(!fCBool){
+                if(3<= this.diceSum && this.diceSum <= 5){
+                    for( let i = 0; i < this.goodQuotes.length; i++){
+                        if(this.goodQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 1;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(5 < this.diceSum && this.diceSum <= 8){
+                    for( let i = 0; i < this.goodNeutralQuotes.length; i++){
+                        if(this.goodNeutralQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 2;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(8 < this.diceSum && this.diceSum <= 12){
+                    for( let i = 0; i < this.neutralQuotes.length; i++){
+                        if(this.neutralQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 3;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(12 < this.diceSum && this.diceSum <= 15){
+                    for( let i = 0; i < this.badNeutralQuotes.length; i++){
+                        if(this.badNeutralQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 4;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(15 < this.diceSum && this.diceSum <= 18){
+                    for( let i = 0; i < this.badQuotes.length; i++){
+                        if(this.badQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 5;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }
+            }
         } else if (!this.heaven) {
             // play correct sound
             this.correctSFX.play();
             this.correct++;
+            correctGhosts++;
+            if(!fCBool){
+                if(3<= this.diceSum && this.diceSum <= 5){
+                    for( let i = 0; i < this.goodQuotes.length; i++){
+                        if(this.goodQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 1;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(5 < this.diceSum && this.diceSum <= 8){
+                    for( let i = 0; i < this.goodNeutralQuotes.length; i++){
+                        if(this.goodNeutralQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 2;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(8 < this.diceSum && this.diceSum <= 12){
+                    for( let i = 0; i < this.neutralQuotes.length; i++){
+                        if(this.neutralQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 3;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(12 < this.diceSum && this.diceSum <= 15){
+                    for( let i = 0; i < this.badNeutralQuotes.length; i++){
+                        if(this.badNeutralQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 4;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }else if(15 < this.diceSum && this.diceSum <= 18){
+                    for( let i = 0; i < this.badQuotes.length; i++){
+                        if(this.badQuotes[i] == this.quote){
+                            this.firstCorrect = i;
+                            cGoodNeutralBad = 5;
+                        }
+                    }
+                    console.log(this.firstCorrect);
+                    fCBool = true;
+                }
+            }
             // update alcohol and make sure it isn't past the max
             this.alcohol += this.alcCalc();
             if (this.alcohol > game.settings.maxAlcohol) {
@@ -333,6 +586,55 @@ class Play extends Phaser.Scene {
         } else {
             // play incorrect sound
             this.wrongSFX.play();
+            incorrectGhosts++;
+            if(!fIBool){
+                if(3<= this.diceSum && this.diceSum <= 5){
+                    for( let i = 0; i < this.goodQuotes.length; i++){
+                        if(this.goodQuotes[i] == this.quote){
+                            firstIncorrect = i;
+                            iGoodNeutralBad = 1;
+                        }
+                    }
+                    console.log(firstIncorrect);
+                    fIBool = true;
+                }else if(5 < this.diceSum && this.diceSum <= 8){
+                    for( let i = 0; i < this.goodNeutralQuotes.length; i++){
+                        if(this.goodNeutralQuotes[i] == this.quote){
+                            firstIncorrect = i;
+                            iGoodNeutralBad = 2;
+                        }
+                    }
+                    console.log(firstIncorrect);
+                    fIBool = true;
+                }else if(8 < this.diceSum && this.diceSum <= 12){
+                    for( let i = 0; i < this.neutralQuotes.length; i++){
+                        if(this.neutralQuotes[i] == this.quote){
+                            firstIncorrect = i;
+                            iGoodNeutralBad = 3;
+                        }
+                    }
+                    console.log(firstIncorrect);
+                    fIBool = true;
+                }else if(12 < this.diceSum && this.diceSum <= 15){
+                    for( let i = 0; i < this.badNeutralQuotes.length; i++){
+                        if(this.badNeutralQuotes[i] == this.quote){
+                            firstIncorrect = i;
+                            iGoodNeutralBad = 4;
+                        }
+                    }
+                    console.log(firstIncorrect);
+                    fIBool = true;
+                }else if(15 < this.diceSum && this.diceSum <= 18){
+                    for( let i = 0; i < this.badQuotes.length; i++){
+                        if(this.badQuotes[i] == this.quote){
+                            firstIncorrect = i;
+                            iGoodNeutralBad = 5;
+                        }
+                    }
+                    console.log(firstIncorrect);
+                    fIBool = true;
+                }
+            }
         }
         
         // roll dice/spawn new ghost
