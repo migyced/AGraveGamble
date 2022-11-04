@@ -38,6 +38,7 @@ class Load extends Phaser.Scene {
 
         // Ghost
         this.load.image('base_ghost', './assets/Ghost Stuff/base_ghost.png')
+        this.load.spritesheet("ghost_sheet", "./assets/Ghost Stuff/ghost_anim_sheet.png", { frameWidth: 256, frameHeight: 256 });
 
         // Backgrounds
         this.load.image('end_bg', './assets/end_bg.png')
